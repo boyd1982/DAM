@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'today-ng';
+  isCollapsed = false;
+  index = 0;
+  tabs = [];
+  constructor() { }
+  closeTab(tab: string): void {
+    this.tabs.splice(this.tabs.indexOf(tab), 1);
+  }
+
+  newTab(tab: string): void {
+    this.tabs.push(tab);
+    this.index = this.tabs.length - 1;
+  }
 }
