@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout *ngIf= "isLogged; else falsyTemplate;" class="app-layout">
   <nz-sider class="menu-sidebar"
             nzCollapsible
             nzWidth="256px"
@@ -11,60 +11,92 @@
         <h1>数据资产质量评估系统</h1>
       </a>
     </div>
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="数据资产目录" nzIcon="dashboard">
+    <ul  nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="数据资产" nzIcon="dashboard">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome" (click)="newTab('welcome')" >Welcome</a>
+
+          <li nz-menu-item nzMatchRouter (click)="newTab('业务数据资产看板')">
+            <a routerLink="/welcome"  >业务数据资产看板</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/setup">Setup</a>
+          <li nz-menu-item nzMatchRouter (click)="newTab('数据资产目录')">
+            <a routerLink="/setup"  >数据资产目录</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome/test">Test</a>
+          <li *ngIf="loginstatus.user_role == 5 || loginstatus.user_role == 0 " nz-menu-item nzMatchRouter >
+            <a routerLink="" (click)="newTab('数据字典维护')" >数据字典维护</a>
+          </li>
+          <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter >
+            <a routerLink="/admin" (click)="newTab('管理后台')" >管理后台</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+
+      <li nz-submenu nzOpen nzTitle="数据质量分析" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
+            <a>数据质量看板</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>一致性分析</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>完整性分析</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>冗余度分析</a>
           </li>
         </ul>
       </li>
     </ul>
+
   </nz-sider>
   <nz-layout>
-    <nz-header>
+    <nz-header style="background: #fff;">
       <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
-        </span>
+        <div nz-row>
+          <div nz-col nzSpan="20">
+            <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+              <i class="trigger"
+                 nz-icon
+                 [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+              ></i>
+            </span>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-avatar nzIcon="user" (click)="showUserInfo()"></nz-avatar>
+            <nz-modal [(nzVisible)]="isVisible" nzTitle="用户信息" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+              <p>Content one</p>
+              <p>Content two</p>
+              <p>Content three</p>
+            </nz-modal>
+          </div>
+        </div>
+        <!--<div style="width:100%;text-align: right">test</div>-->
       </div>
+
     </nz-header>
     <nz-content>
       <div class="inner-content">
 
-        <nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate">
-          <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+        <nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="index">
+          <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  >
             <ng-template #titleTemplate>
               <div>
                 {{ tab }}
                 <i nz-icon nzType="close" (click)="closeTab(tab)" class="ant-tabs-close-x"></i>
               </div>
+              <router-outlet></router-outlet>
             </ng-template>
             <router-outlet></router-outlet>
+            <!--content of {{tab}}-->
           </nz-tab>
         </nz-tabset>
-<!--        <ng-template #extraTemplate>-->
-<!--          <i class="ant-tabs-new-tab" nz-icon nzType="plus" (click)="newTab()"></i>-->
-<!--        </ng-template>-->
-
-
       </div>
     </nz-content>
   </nz-layout>
 </nz-layout>
+
+<ng-template #falsyTemplate>
+  <div class="background-content">
+    <app-login (loginMsg)="getLoginMsg($event)" ></app-login>
+  </div>
+</ng-template>

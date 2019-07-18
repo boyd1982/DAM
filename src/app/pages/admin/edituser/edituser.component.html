@@ -1,0 +1,69 @@
+<nz-table #editRowTable nzBordered [nzData]="listOfData">
+  <thead>
+  <tr>
+    <th nzWidth="20%">用户名</th>
+    <th nzWidth="15%">系统角色</th>
+    <th nzWidth="45%">数据库权限</th>
+    <th>编辑</th>
+    <th>删除</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of editRowTable.data">
+
+    <td>
+      <ng-container *ngIf="!editCache[data.user_id].edit; else idInputTpl">
+        {{ data.user_id }}
+      </ng-container>
+      <ng-template #idInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data.user_id].data.user_id" />
+      </ng-template>
+    </td>
+
+    <td>
+      <ng-container *ngIf="!editCache[data.user_id].edit; else roleInputTpl">
+        {{roleDict[data.user_role]}}
+      </ng-container>
+      <ng-template #roleInputTpl>
+        <nz-select style="width: 200px" [(ngModel)]="editCache[data.user_id].data.user_role"  nzAllowClear nzPlaceHolder="请选择权限角色">
+          <nz-option nzValue="0" nzLabel="超级管理员"></nz-option>
+          <nz-option nzValue="5" nzLabel="数据库管理员"></nz-option>
+          <nz-option nzValue="10" nzLabel="普通用户" ></nz-option>
+        </nz-select>
+        <!--<input type="text" nz-input [(ngModel)]="editCache[data.id].data.age" />-->
+      </ng-template>
+    </td>
+
+    <td>
+      <ng-container style="width: 20%" *ngIf="!editCache[data.user_id].edit; else jurisdictionInputTpl">
+        <nz-tag *ngFor="let item of data.jurisdiction| keyvalue">{{item.key}}</nz-tag>
+        <!--{{ data.jurisdiction }}-->
+      </ng-container>
+      <ng-template #jurisdictionInputTpl>
+        <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="log($event)">
+        <!--<nz-checkbox-wrapper style="width: 100%;" [(ngModel)]="test">-->
+          <div nz-row >
+            <div nz-col *ngFor="let item of checkOptions" nzSpan="5"><label nz-checkbox nzValue="{{item['value']}}" [ngModel]="true">{{item['label']}}</label></div>
+          </div>
+        </nz-checkbox-wrapper>
+
+      </ng-template>
+    </td>
+
+    <td>
+      <div class="editable-row-operations">
+        <ng-container *ngIf="!editCache[data.user_id].edit; else saveTpl">
+          <a (click)="startEdit(data.user_id)">编辑</a>
+        </ng-container>
+        <ng-template #saveTpl>
+          <a (click)="saveEdit(data.user_id)">保存</a>
+          <a nz-popconfirm nzTitle="确认取消?" (nzOnConfirm)="cancelEdit(data.user_id)">取消</a>
+        </ng-template>
+      </div>
+    </td>
+    <td>
+      <a nz-popconfirm nzTitle="确认删除?" (nzOnConfirm)="deleteRow(data.user_id)">删除</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

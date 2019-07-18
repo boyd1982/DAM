@@ -6,6 +6,7 @@ import { WelcomeComponent } from './welcome.component';
 import { TestComponent } from './test/test.component';
 
 
+
 @NgModule({
   imports: [WelcomeRoutingModule],
   declarations: [WelcomeComponent, TestComponent],

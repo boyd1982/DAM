@@ -1,0 +1,9 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button (click)="adduser()" >添加用户</button>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="添加用户" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <app-adduser (addMsg)="getAddMsg($event)"></app-adduser>
+</nz-modal>
+
+<app-edituser #edituserComponent></app-edituser>

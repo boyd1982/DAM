@@ -1,0 +1,85 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>用户名</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="正在验证..." [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="userId" placeholder="用户名" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入用户名！
+        </ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">
+          用户名重复！
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>姓名</nz-form-label>
+    <nz-form-control [nzSpan]="12"  >
+      <input nz-input formControlName="userName" placeholder="用户名" />
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>密码</nz-form-label>
+    <div>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+        <input nz-input type="password" formControlName="password" (ngModelChange)="validateConfirmPassword()" />
+      </nz-form-control>
+    </div>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>确认密码</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+      <input nz-input type="password" formControlName="confirm" placeholder="确认密码" />
+      <ng-template #passwordErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请确认密码！
+        </ng-container>
+        <ng-container *ngIf="control.hasError('confirm')">
+          两次输入密码不一致！
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>权限角色</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select [(ngModel)]="selectedValue" formControlName="permissions" nzAllowClear nzPlaceHolder="请选择权限角色">
+        <nz-option nzValue="0" nzLabel="超级管理员"></nz-option>
+        <nz-option nzValue="5" nzLabel="数据库管理员"></nz-option>
+        <nz-option nzValue="10" nzLabel="普通用户" ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!--当权限为数据库管理员(5)时显示-->
+  <nz-form-item *ngIf="selectedValue==5">
+    <nz-form-label [nzSpan]="2" [nzNoColon]="true"></nz-form-label>
+    <nz-form-control [nzSpan]="25" >
+      <nz-transfer
+        [nzDataSource]="list"
+        [nzTitles]="['选择', '选项']"
+        style="margin: auto"
+        (nzChange)="change($event)"
+      >
+      </nz-transfer>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button style="margin-right: 10px" nzType="primary" [disabled]="!validateForm.valid">确认</button>
+      <button nz-button (click)="resetForm($event)">重置</button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="!addSuccess">
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <nz-alert nzType="error" nzMessage="添加失败！"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>

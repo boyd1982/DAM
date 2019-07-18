@@ -1,0 +1,51 @@
+
+
+<div class="full-screen page-content" style="margin-top:5%">
+  <div class="wrapper">
+    <img class="logo-img" src="./assets/img/logo.png" alt="">
+    <div class="text-wrapper">
+      <h1 class="title-text">
+        数据资产质量评估系统
+      </h1>
+    </div>
+    <!--<app-login (loginMsg)="getLoginMsg($event)" ></app-login>-->
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixUser">
+            <input type="text" nz-input formControlName="userName" placeholder="用户名" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('userName')?.dirty && validateForm.get('userName')?.errors">
+            请输入用户名！
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixLock">
+            <input type="password" nz-input formControlName="password" placeholder="密码" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('password')?.dirty && validateForm.get('password')?.errors">
+            请输入密码！
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="remember">
+            <span>记住我</span>
+          </label>
+          <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
+          <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+          或者
+          <a href="">注册</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+    <div class="copy-right">
+      Copyright © 2019 东北大学
+    </div>
+  </div>
+</div>
