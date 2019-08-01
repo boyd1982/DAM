@@ -13,6 +13,11 @@ import {SetupModule} from './pages/setup/setup.module';
 import zh from '@angular/common/locales/zh';
 import { LoginComponent } from './shared/login/login.component';
 import {CookieService} from "ngx-cookie-service";
+import {WelcomeModule} from "./pages/welcome/welcome.module";
+import {AdminModule} from "./pages/admin/admin.module";
+import {AdminComponent} from "./pages/admin/admin.component";
+import {WelcomeComponent} from "./pages/welcome/welcome.component";
+import {SetupComponent} from "./pages/setup/setup.component";
 
 
 registerLocaleData(zh);
@@ -21,6 +26,9 @@ registerLocaleData(zh);
   declarations: [
     AppComponent,
     LoginComponent,
+    // AdminComponent,
+    // WelcomeComponent,
+    // SetupComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,8 @@ registerLocaleData(zh);
     // ),
     BrowserAnimationsModule,
     SetupModule,
+    WelcomeModule,
+    AdminModule,
     ReactiveFormsModule
 
   ],

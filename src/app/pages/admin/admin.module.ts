@@ -18,6 +18,7 @@ import { EdituserComponent } from './edituser/edituser.component';
     FormsModule,
     AdminRoutingModule,
     NgZorroAntdModule
-  ]
+  ],
+  exports:[AdminComponent]
 })
 export class AdminModule { }

@@ -7,4 +7,8 @@ export const ROLE_DICTIONARY: { [key: string]: any } = {
   "5": "数据库管理员",
   "10": "普通用户"
 };
-
+export const VALUE_ROLE_DICTIONARY: { [key: string]: any } = {
+  "超级管理员":"0",
+  "数据库管理员":"5",
+  "普通用户":"10"
+};

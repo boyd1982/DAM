@@ -12,12 +12,7 @@ export class WelcomeComponent implements OnInit {
   constructor(private ts:TestService) { }
 
   ngOnInit() {
-    this.ts.userList()
-      .subscribe(
-        (res)=>{
-          console.log(res);
-        }
-      )
+
   }
 
 }

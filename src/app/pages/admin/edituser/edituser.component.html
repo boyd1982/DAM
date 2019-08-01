@@ -20,30 +20,39 @@
       </ng-template>
     </td>
 
+
+
     <td>
       <ng-container *ngIf="!editCache[data.user_id].edit; else roleInputTpl">
         {{roleDict[data.user_role]}}
       </ng-container>
       <ng-template #roleInputTpl>
-        <nz-select style="width: 200px" [(ngModel)]="editCache[data.user_id].data.user_role"  nzAllowClear nzPlaceHolder="请选择权限角色">
+        <nz-select style="width: 200px" [(ngModel)]="editCache[data.user_id].selectedRole"  nzAllowClear nzPlaceHolder="请选择权限角色">
           <nz-option nzValue="0" nzLabel="超级管理员"></nz-option>
           <nz-option nzValue="5" nzLabel="数据库管理员"></nz-option>
           <nz-option nzValue="10" nzLabel="普通用户" ></nz-option>
         </nz-select>
-        <!--<input type="text" nz-input [(ngModel)]="editCache[data.id].data.age" />-->
       </ng-template>
     </td>
 
     <td>
       <ng-container style="width: 20%" *ngIf="!editCache[data.user_id].edit; else jurisdictionInputTpl">
-        <nz-tag *ngFor="let item of data.jurisdiction| keyvalue">{{item.key}}</nz-tag>
+
+        <nz-tag *ngFor="let item of data.user_permissions| keyvalue">{{item.key}}</nz-tag>
         <!--{{ data.jurisdiction }}-->
       </ng-container>
       <ng-template #jurisdictionInputTpl>
         <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="log($event)">
-        <!--<nz-checkbox-wrapper style="width: 100%;" [(ngModel)]="test">-->
           <div nz-row >
-            <div nz-col *ngFor="let item of checkOptions" nzSpan="5"><label nz-checkbox nzValue="{{item['value']}}" [ngModel]="true">{{item['label']}}</label></div>
+            <!--<div nz-col *ngFor="let item of checkOptions" nzSpan="5">-->
+            <!--&lt;!&ndash;<div nz-col *ngFor="let item of checkOptions" nzSpan="5">&ndash;&gt;-->
+              <!--<label *ngIf="editCache[data.user_id]['checkOptions'].indexOf(item['module_name'])==-1; else checkTpl;" nz-checkbox nzValue="{{item['module_name']}}" [ngModel]="false">{{item['module_name']}}</label>-->
+              <!--<ng-template #checkTpl>-->
+                <!--<label  nz-checkbox nzValue="{{item['module_name']}}" [ngModel]="true">{{item['module_name']}}</label>-->
+              <!--</ng-template>-->
+            <!--</div>-->
+            <nz-checkbox-group [(ngModel)]="editCache[data.user_id].checkOptions" (ngModelChange)="log(checkOptionsOne)"></nz-checkbox-group>
+
           </div>
         </nz-checkbox-wrapper>
 

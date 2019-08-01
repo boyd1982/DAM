@@ -10,3 +10,6 @@ export class User{
   user_role: string;
   user_permissions: { [key: string]: number };
 }
+export class DeleteUser{
+  user_id: string;
+}

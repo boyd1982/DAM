@@ -30,6 +30,8 @@ export class AppComponent {
     //     console.log(this.loginstatus);
     //     this.isLogged = (this.loginstatus.status == "success") ;
     //   })
+    this.tabs.push("用户管理后台");
+    this.router.navigateByUrl("/admin");
 
   }
   closeTab(tab: string): void {

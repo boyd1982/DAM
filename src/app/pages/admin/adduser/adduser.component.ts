@@ -4,6 +4,8 @@ import { Observable, Observer } from 'rxjs';
 import {falseIfMissing} from "protractor/built/util";
 import {CommonService} from "../../../service/common.service";
 import {User} from "../../../pojo/user";
+import {any} from "codelyzer/util/function";
+import {transformAll} from "@angular/compiler/src/render3/r3_ast";
 @Component({
   selector: 'app-adduser',
   templateUrl: './adduser.component.html',
@@ -17,6 +19,7 @@ export class AdduserComponent implements OnInit {
   selectedDatabases: string[] = [];//转移框中选择的数据库
   newUser:User = new User();
   addSuccess: boolean = true;//是否添加成功
+  temp: any;
   list = [
     {"key": 1,"title": "PMS"},
     {"key": 2,"title": "ERP"},
@@ -33,11 +36,9 @@ export class AdduserComponent implements OnInit {
       }
     }else {
       for ( let res of ret["list"]){
-
         this.selectedDatabases.splice(this.selectedDatabases.indexOf(res.title),1);
       }
     }
-
   }
   //提交表单按钮
   submitForm(value: any): void {
@@ -66,10 +67,8 @@ export class AdduserComponent implements OnInit {
           this.addSuccess = false;
           this.validateForm.reset();
           this.sendAddMsg(0);
-
         }
-
-      })
+      });
   }
   //向父组件发送成功消息，为关闭模态框
   sendAddMsg(msg: number){
@@ -89,17 +88,36 @@ export class AdduserComponent implements OnInit {
     setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
   }
   //用户名是否已存在
+  // userNameAsyncValidator = (control: FormControl) =>{
+  //
+  //   this.temp = this.commonService.userIdExist(control.value);
+  //   return this.temp;
+  // }
+    // new Observable((observer: Observer<ValidationErrors | null>) => {
+    //   setTimeout(() => {
+    //     if (control.value === 'JasonWood') {
+    //       // you have to return `{error: true}` to mark it as an error event
+    //       observer.next({ error: true, duplicated: true });
+    //     } else {
+    //       observer.next(null);
+    //     }
+    //     observer.complete();
+    //   }, 1000);
+    // }
+    // );
   userNameAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
+      this.commonService.userIdExist(control.value)
+        .subscribe(
+          (res)=>{
+            if (res['status']==1){
+              observer.next({error: true, duplicated: true});
+            }else {
+              observer.next(null);
+            }
+            observer.complete();
+          }
+        )
     });
 
   //确认密码一致

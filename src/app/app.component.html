@@ -14,23 +14,23 @@
     <ul  nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzOpen nzTitle="数据资产" nzIcon="dashboard">
         <ul>
-
+          <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter nzSelected >
+            <a routerLink="/admin" (click)="newTab('管理后台')" >管理后台</a>
+          </li>
           <li nz-menu-item nzMatchRouter (click)="newTab('业务数据资产看板')">
             <a routerLink="/welcome"  >业务数据资产看板</a>
           </li>
           <li nz-menu-item nzMatchRouter (click)="newTab('数据资产目录')">
             <a routerLink="/setup"  >数据资产目录</a>
           </li>
-          <li *ngIf="loginstatus.user_role == 5 || loginstatus.user_role == 0 " nz-menu-item nzMatchRouter >
-            <a routerLink="" (click)="newTab('数据字典维护')" >数据字典维护</a>
-          </li>
-          <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter >
-            <a routerLink="/admin" (click)="newTab('管理后台')" >管理后台</a>
-          </li>
+          <!--<li *ngIf="loginstatus.user_role == 5 || loginstatus.user_role == 0 " nz-menu-item nzMatchRouter >-->
+            <!--<a routerLink="" (click)="newTab('数据字典维护')" >数据字典维护</a>-->
+          <!--</li>-->
+
         </ul>
       </li>
 
-      <li nz-submenu nzOpen nzTitle="数据质量分析" nzIcon="form">
+      <li nz-submenu nzTitle="数据质量分析" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a>数据质量看板</a>
@@ -78,15 +78,18 @@
       <div class="inner-content">
 
         <nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="index">
-          <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  >
+          <nz-tab style="width: 100px" *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  >
             <ng-template #titleTemplate>
-              <div>
+              <div style="margin: auto">
                 {{ tab }}
                 <i nz-icon nzType="close" (click)="closeTab(tab)" class="ant-tabs-close-x"></i>
               </div>
-              <router-outlet></router-outlet>
+              <!--<router-outlet></router-outlet>-->
             </ng-template>
-            <router-outlet></router-outlet>
+            <app-admin *ngIf="tab == '用户管理后台'"></app-admin>
+            <app-setup *ngIf="tab == '数据资产目录'"></app-setup>
+            <app-welcome *ngIf="tab =='业务数据资产看板'"></app-welcome>
+            <!--<router-outlet></router-outlet>-->
             <!--content of {{tab}}-->
           </nz-tab>
         </nz-tabset>

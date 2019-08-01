@@ -12,6 +12,9 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     CommonModule,
     SetupRoutingModule,
     NgZorroAntdModule
+  ],
+  exports:[
+    SetupComponent
   ]
 })
 export class SetupModule { }
