@@ -15,7 +15,10 @@
       <li nz-submenu nzOpen nzTitle="数据资产" nzIcon="dashboard">
         <ul>
           <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter nzSelected >
-            <a routerLink="/admin" (click)="newTab('管理后台')" >管理后台</a>
+            <a routerLink="/admin" (click)="newTab('用户管理后台')" >用户管理后台</a>
+          </li>
+          <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter nzSelected >
+            <a routerLink="/database" (click)="newTab('数据库管理后台')" >数据库管理后台</a>
           </li>
           <li nz-menu-item nzMatchRouter (click)="newTab('业务数据资产看板')">
             <a routerLink="/welcome"  >业务数据资产看板</a>
@@ -87,6 +90,7 @@
               <!--<router-outlet></router-outlet>-->
             </ng-template>
             <app-admin *ngIf="tab == '用户管理后台'"></app-admin>
+            <app-database *ngIf="tab == '数据库管理后台'"></app-database>
             <app-setup *ngIf="tab == '数据资产目录'"></app-setup>
             <app-welcome *ngIf="tab =='业务数据资产看板'"></app-welcome>
             <!--<router-outlet></router-outlet>-->

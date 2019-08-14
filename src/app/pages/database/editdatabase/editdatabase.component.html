@@ -1,0 +1,119 @@
+<nz-table #editRowTable nzBordered [nzData]="listOfData">
+  <thead>
+  <tr>
+    <th nzWidth="10%">数据库名</th>
+    <th nzWidth="10%">数据库类型</th>
+    <th nzWidth="10%">用户名</th>
+    <th nzWidth="10%">密码</th>
+    <th nzWidth="10%">IP地址</th>
+    <th nzWidth="10%">端口号</th>
+    <th nzWidth="10%">MySQL数据库名</th>
+    <th nzWidth="10%">Oracle SID</th>
+    <th nzWidth="10%">编辑</th>
+    <th nzWidth="10%">删除</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of editRowTable.data">
+
+    <!--数据库名-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else modulenameInputTpl">
+        {{ data['module_name'] }}
+      </ng-container>
+      <ng-template #modulenameInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['module_name']" />
+      </ng-template>
+    </td>
+    <!--数据库类型-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else typeInputTpl">
+        {{data['database_type']}}
+      </ng-container>
+      <ng-template #typeInputTpl>
+        <nz-select style="width: 200px" [(ngModel)]="editCache[data['module_name']].data['database_type']"  nzAllowClear nzPlaceHolder="请选择数据库类型">
+          <nz-option nzValue="mysql" nzLabel="MySQL"></nz-option>
+          <nz-option nzValue="oracle" nzLabel="ORACLE"></nz-option>
+          <nz-option nzValue="dbII" nzLabel="DBII" ></nz-option>
+        </nz-select>
+      </ng-template>
+    </td>
+    <!--用户名-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else usernameInputTpl">
+        {{ data['user_name'] }}
+      </ng-container>
+      <ng-template #usernameInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['user_name']" />
+      </ng-template>
+    </td>
+
+    <!--密码-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else passwordInputTpl">
+        {{ data['password'] }}
+      </ng-container>
+      <ng-template #passwordInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['password']" />
+      </ng-template>
+    </td>
+
+    <!--ip地址-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else ipaddressInputTpl">
+        {{ data['ip_address'] }}
+      </ng-container>
+      <ng-template #ipaddressInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['ip_address']" />
+      </ng-template>
+    </td>
+
+    <!--端口号-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else portInputTpl">
+        {{ data['port'] }}
+      </ng-container>
+      <ng-template #portInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['port']" />
+      </ng-template>
+    </td>
+
+    <!--MySQL数据库名-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else dbnameInputTpl">
+        {{ data['db_name'] }}
+      </ng-container>
+      <ng-template #dbnameInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['db_name']" />
+      </ng-template>
+    </td>
+
+    <!--Oracle SID-->
+    <td>
+      <ng-container *ngIf="!editCache[data['module_name']].edit; else sidInputTpl">
+        {{ data['sid'] }}
+      </ng-container>
+      <ng-template #sidInputTpl>
+        <input type="text" nz-input [(ngModel)]="editCache[data['module_name']].data['sid']" />
+      </ng-template>
+    </td>
+
+
+    <td>
+      <div class="editable-row-operations">
+        <ng-container *ngIf="!editCache[data['module_name']].edit; else saveTpl">
+          <a (click)="startEdit(data['module_name'])">编辑</a>
+        </ng-container>
+        <ng-template #saveTpl>
+          <a (click)="saveEdit(data['module_name'])">保存</a>
+          <a nz-popconfirm nzTitle="确认取消?" (nzOnConfirm)="cancelEdit(data['module_name'])">取消</a>
+        </ng-template>
+      </div>
+    </td>
+    <td>
+      <a nz-popconfirm nzTitle="确认删除?" (nzOnConfirm)="deleteRow(data['module_name'])">删除</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+

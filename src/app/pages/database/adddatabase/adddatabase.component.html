@@ -1,0 +1,86 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>数据库类型</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select [(ngModel)]="selectedDatabaseType" formControlName="database_type" nzAllowClear nzPlaceHolder="请选择数据库类型">
+        <nz-option nzValue="oracle" nzLabel="Oracle"></nz-option>
+        <nz-option nzValue="mysql" nzLabel="MySQL"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>数据库名</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="正在验证..." [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="module_name" placeholder="数据库名" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入数据库名！
+        </ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">
+          数据库名重复！
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>数据库账号名</nz-form-label>
+    <nz-form-control [nzSpan]="12"  >
+      <input nz-input formControlName="userName" placeholder="用户名" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>数据库密码</nz-form-label>
+    <div>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+        <input nz-input type="password" formControlName="password"  />
+      </nz-form-control>
+    </div>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>数据库IP地址</nz-form-label>
+    <nz-form-control [nzSpan]="12"  >
+      <input nz-input formControlName="ipAddress" placeholder="IP地址" />
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>端口</nz-form-label>
+    <nz-form-control [nzSpan]="12"  >
+      <input nz-input formControlName="port" placeholder="端口" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="selectedDatabaseType=='mysql'">
+    <nz-form-label [nzSpan]="7" nzRequired>数据库名</nz-form-label>
+    <nz-form-control [nzSpan]="12"  >
+      <input nz-input formControlName="db_name" placeholder="数据库名" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="selectedDatabaseType=='oracle'">
+    <nz-form-label [nzSpan]="7" nzRequired>sid</nz-form-label>
+    <nz-form-control [nzSpan]="12"  >
+      <input nz-input formControlName="sid" placeholder="sid" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button style="margin-right: 10px" nzType="primary" [disabled]="!validateForm.valid">确认</button>
+      <button nz-button (click)="resetForm($event)">重置</button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="!addSuccess">
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <nz-alert nzType="error" nzMessage="添加失败！"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+

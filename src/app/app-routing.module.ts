@@ -12,7 +12,8 @@ const routes: Routes = [
   // { path: '', pathMatch: 'full', redirectTo: '/welcome' },
   { path: 'welcome', component:WelcomeComponent },
   { path: 'setup', component:SetupComponent},
-  { path: 'admin', loadChildren:  './pages/admin/admin.module#AdminModule' }
+  { path: 'admin', loadChildren:  './pages/admin/admin.module#AdminModule' },
+  { path: 'database', loadChildren: './pages/database/database.module#DatabaseModule'}
 
 ];
 
@@ -22,7 +23,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     SetupModule,
     WelcomeModule,
-    AdminModule
+    AdminModule,
+
   ],
   exports: [RouterModule]
 })

@@ -1,0 +1,10 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button (click)="adddatabase()" >添加数据库</button>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="添加数据库" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <!--<app-adddatabase (addMsg)="getAddMsg($event)"></app-adddatabase>-->
+  <app-adddatabase (addMsg)="getAddMsg($event)"></app-adddatabase>
+</nz-modal>
+
+<app-editdatabase #editdatabaseComponent></app-editdatabase>

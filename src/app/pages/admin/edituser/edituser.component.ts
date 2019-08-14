@@ -61,9 +61,6 @@ export class EdituserComponent implements OnInit {
 
   cancelEdit(id: string): void {
     const index = this.listOfData.findIndex(item => item.user_id === id);
-    // for (const key of Object.keys(this.listOfData[index]['user_permissions'])){
-    //   this.checkOptionsTemp.push(key);
-    // }
     for (const key of Object.keys(this.listOfData[index].user_permissions)){
       this.cOptionsTemp.push(key);
     }

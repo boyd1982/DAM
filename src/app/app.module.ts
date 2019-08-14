@@ -18,6 +18,7 @@ import {AdminModule} from "./pages/admin/admin.module";
 import {AdminComponent} from "./pages/admin/admin.component";
 import {WelcomeComponent} from "./pages/welcome/welcome.component";
 import {SetupComponent} from "./pages/setup/setup.component";
+import {DatabaseModule} from "./pages/database/database.module";
 
 
 registerLocaleData(zh);
@@ -44,6 +45,7 @@ registerLocaleData(zh);
     SetupModule,
     WelcomeModule,
     AdminModule,
+    DatabaseModule,
     ReactiveFormsModule
 
   ],
