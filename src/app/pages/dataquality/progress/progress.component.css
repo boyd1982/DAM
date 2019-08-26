@@ -1,0 +1,9 @@
+#actionstart{
+  color: #000c17;
+}
+#actionstart:hover{color: red}
+
+#actionstat{
+  color: red;
+}
+#actionstat:hover{color: #0000e3}

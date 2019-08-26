@@ -36,7 +36,10 @@
       <li nz-submenu nzTitle="数据质量分析" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>数据质量看板</a>
+            <a routerLink="/dashboard" (click)="newTab('数据质量看板')">数据质量看板</a>
+          </li>
+          <li nz-menu-item nzMatchRouter (click)="newTab('当前任务进度')">
+            <a routerLink="/progress" (click)="newTab('当前任务进度')" >当前任务进度</a>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a>一致性分析</a>
@@ -93,6 +96,8 @@
             <app-database *ngIf="tab == '数据库管理后台'"></app-database>
             <app-setup *ngIf="tab == '数据资产目录'"></app-setup>
             <app-welcome *ngIf="tab =='业务数据资产看板'"></app-welcome>
+            <app-dataquality *ngIf="tab == '数据质量看板'"></app-dataquality>
+            <app-progress *ngIf="tab == '当前任务进度'"></app-progress>
             <!--<router-outlet></router-outlet>-->
             <!--content of {{tab}}-->
           </nz-tab>

@@ -1,0 +1,59 @@
+<div nz-row>
+  <div  *ngFor="let module of statusList" nz-col nzSpan="6">
+    <nz-card  style="width:270px; margin-top: 10px" [nzHoverable]=true [nzActions]="[actionStatus,actionStart,actionStat]">
+
+      <nz-card-meta
+        nzTitle= "{{module['module_name']}}"
+        nzDescription="{{statusDescription[module['module_name']]}}"
+        [nzAvatar]="avatarTemplate"
+      ></nz-card-meta>
+    </nz-card>
+
+    <ng-template #avatarTemplate>
+      <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+    </ng-template>
+
+    <ng-template #actionStatus>
+      <!--<i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>-->
+      <i  nz-icon [nzType]="'sync'" [nzSpin]="moduleStatus[module['module_name']]"  [nzTheme]="'outline'" style="color:#0000e3"></i>
+    </ng-template>
+
+    <ng-template #actionStart>
+      <i id="actionstart" nz-icon [nzType]="iconType[module['module_name']]" nzTheme="outline"
+         (click)="handleStartClick(module['module_name'],module['status'],moduleStatus[module['module_name']])"></i>
+    </ng-template>
+
+    <ng-template #actionStat>
+      <i id="actionstat"  nz-icon nzType="bar-chart" [nzTheme]="'outline'" (click)="handleStatClick(module)"></i>
+    </ng-template>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="statModalInfo['isVisible']" nzTitle="{{statModalInfo['module_name']}}任务进度" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-list [nzDataSource]="statModalInfo['jobs']" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <ng-template #item let-item>
+      <nz-list-item>
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          nzDescription="{{jddict[item['job_name']]}}"
+        >
+          <ng-template #nzTitle>
+            <a href="https://ng.ant.design">{{ jbdict[item['job_name']] }}</a>
+          </ng-template>
+        </nz-list-item-meta>
+        <nz-progress *ngIf="neverStatus; else falsyTemplate;" [nzPercent]="100" nzType="circle" nzStatus="exception" [nzWidth]="30"></nz-progress>
+        <ng-template #falsyTemplate>
+          <!--<nz-progress *ngIf="item['todo'] == -1" [nzPercent]="100" nzType="circle"  [nzWidth]="30"></nz-progress>-->
+          <nz-progress *ngIf="moduleStatus[module[module_name]]" [nzPercent]="item['done']/item['todo'] * 100" nzType="circle"  [nzWidth]="30"></nz-progress>
+
+        </ng-template>
+
+      </nz-list-item>
+
+    </ng-template>
+  </nz-list>
+
+</nz-modal>
+
+
