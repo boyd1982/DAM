@@ -12,7 +12,7 @@ import { registerLocaleData } from '@angular/common';
 import {SetupModule} from './pages/setup/setup.module';
 import zh from '@angular/common/locales/zh';
 import { LoginComponent } from './shared/login/login.component';
-import {CookieService} from "ngx-cookie-service";
+// import {CookieService} from "ngx-cookie-service";
 import {WelcomeModule} from "./pages/welcome/welcome.module";
 import {AdminModule} from "./pages/admin/admin.module";
 import {AdminComponent} from "./pages/admin/admin.component";
@@ -53,7 +53,6 @@ registerLocaleData(zh);
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
-    CookieService
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataqualityRoutingModule } from './dataquality-routing.module';
 import { DataqualityComponent } from './dataquality/dataquality.component';
 import { ProgressComponent } from './progress/progress.component';
-import {NgZorroAntdModule} from "ng-zorro-antd";
+import {NgZorroAntdModule} from 'ng-zorro-antd';
 
 
 
@@ -16,7 +16,7 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     DataqualityRoutingModule,
     NgZorroAntdModule
   ],
-  exports:[
+  exports: [
     DataqualityComponent,
     ProgressComponent
   ]

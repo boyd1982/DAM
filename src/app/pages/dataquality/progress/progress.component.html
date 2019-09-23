@@ -1,7 +1,7 @@
 <div nz-row>
   <div  *ngFor="let module of statusList" nz-col nzSpan="6">
-    <nz-card  style="width:270px; margin-top: 10px" [nzHoverable]=true [nzActions]="[actionStatus,actionStart,actionStat]">
 
+    <nz-card  style="width:270px; margin-top: 10px" [nzHoverable]=true [nzActions]="[actionStatus,actionStart,actionStat]">
       <nz-card-meta
         nzTitle= "{{module['module_name']}}"
         nzDescription="{{statusDescription[module['module_name']]}}"
@@ -45,7 +45,7 @@
         <nz-progress *ngIf="neverStatus; else falsyTemplate;" [nzPercent]="100" nzType="circle" nzStatus="exception" [nzWidth]="30"></nz-progress>
         <ng-template #falsyTemplate>
           <!--<nz-progress *ngIf="item['todo'] == -1" [nzPercent]="100" nzType="circle"  [nzWidth]="30"></nz-progress>-->
-          <nz-progress *ngIf="moduleStatus[module[module_name]]" [nzPercent]="item['done']/item['todo'] * 100" nzType="circle"  [nzWidth]="30"></nz-progress>
+          <nz-progress *ngIf="moduleStatus[module['module_name']]" [nzPercent]=" item['done']/item['todo'] * 100 | number:'0.1-2' " nzType="circle"  [nzWidth]="50"></nz-progress>
 
         </ng-template>
 

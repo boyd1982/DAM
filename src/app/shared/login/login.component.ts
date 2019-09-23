@@ -1,9 +1,9 @@
-import {Component, OnInit, Output,EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {CommonService} from '../../service/common.service';
 import {LoginUser} from '../../pojo/user';
-import {Loginstatus} from "../../pojo/loginstatus";
-import {CookieService} from "ngx-cookie-service";
+import {Loginstatus} from '../../pojo/loginstatus';
+// import {CookieService} from "ngx-cookie-service";
 
 
 @Component({
@@ -14,10 +14,12 @@ import {CookieService} from "ngx-cookie-service";
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;
   user: LoginUser = new LoginUser();
+  isLoading = false;
   @Output() loginMsg = new EventEmitter<Loginstatus>();
-  //提交表单
+  // 提交表单
   submitForm(): void {
-    for (const i in this.validateForm.controls) {
+    this.isLoading = true;
+    for (const i of Object.keys(this.validateForm.controls) ) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
@@ -27,18 +29,18 @@ export class LoginComponent implements OnInit {
 
 
     this.commonService.userLogin(this.user)
-      .subscribe((loginstatus:Loginstatus)=>{
+      .subscribe((loginstatus: Loginstatus) => {
       this.sendLoginMsg(loginstatus);
+      this.isLoading = false;
 
-    })
+    });
 
   }
-  //发送消息至父表单
-  sendLoginMsg(loginMsg: Loginstatus)
-  {
+  // 发送消息至父表单
+  sendLoginMsg(loginMsg: Loginstatus) {
     this.loginMsg.emit(loginMsg);
   }
-  constructor(private fb: FormBuilder, private commonService: CommonService, private cookieService: CookieService) { }
+  constructor(private fb: FormBuilder, private commonService: CommonService) { }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
